@@ -14,6 +14,17 @@ from tqdm import tqdm
 
 from datetime import datetime
 
+#Auxiliar function to get weather variables by hour
+
+def get_forecast(response, i):
+    date = response['forecast']['forecastday'][0]['date']
+    hour = int (response['forecast']['forecastday'][0]['hour'][i]['time'].split(' ')[1].split(':')[0])
+    condition = response['forecast']['forecastday'][0]['hour'][i]['condition']['text']
+    temperature = response['forecast']['forecastday'][0]['hour'][i]['temp_c']
+    rain = response['forecast']['forecastday'][0]['hour'][i]['will_it_rain']
+    rain_probability = response['forecast']['forecastday'][0]['hour'][i]['chance_of_rain']
+    return date, hour, condition, temperature, rain, rain_probability 
+
 #Alert filters
 temp_max = 32
 temp_min = 5
@@ -63,13 +74,4 @@ print('Mensaje enviado ' + message.sid)
 
 
 
-#Auxiliar function to get weather variables by hour
 
-def get_forecast(response, i):
-    date = response['forecast']['forecastday'][0]['date']
-    hour = int (response['forecast']['forecastday'][0]['hour'][i]['time'].split(' ')[1].split(':')[0])
-    condition = response['forecast']['forecastday'][0]['hour'][i]['condition']['text']
-    temperature = response['forecast']['forecastday'][0]['hour'][i]['temp_c']
-    rain = response['forecast']['forecastday'][0]['hour'][i]['will_it_rain']
-    rain_probability = response['forecast']['forecastday'][0]['hour'][i]['chance_of_rain']
-    return date, hour, condition, temperature, rain, rain_probability 
